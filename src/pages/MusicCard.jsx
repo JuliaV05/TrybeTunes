@@ -11,7 +11,6 @@ export default class MusicCard extends Component {
           <track kind="captions" />
           O seu navegador não suporta o elemento
           {' '}
-          {' '}
           <code>audio</code>
           .
         </audio>
