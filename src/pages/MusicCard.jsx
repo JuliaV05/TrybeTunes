@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Loading from './Loading';
-import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 
 export default class MusicCard extends Component {
   state = {
@@ -13,9 +13,8 @@ export default class MusicCard extends Component {
     this.saveMusic();
   }
 
-  handleChange = ({ target }) => {
+  handleChange = async ({ target }) => {
     const { checked } = target;
-    console.log(checked);
     this.setState({
       click: checked,
     }, this.songFavorites);
@@ -38,8 +37,13 @@ export default class MusicCard extends Component {
 
   songFavorites = async () => {
     const { oneMusic } = this.props;
+    const { click } = this.state;
     this.setState({ loading: true });
-    await addSong(oneMusic);
+    if (click) {
+      await addSong(oneMusic);
+    } else {
+      await removeSong(oneMusic);
+    }
     this.setState({ loading: false });
   };
 
@@ -78,5 +82,7 @@ MusicCard.propTypes = {
   trackName: PropTypes.string.isRequired,
   previewUrl: PropTypes.string.isRequired,
   trackId: PropTypes.number.isRequired,
-  oneMusic: PropTypes.shape.isRequired,
+  oneMusic: PropTypes.shape({
+    trackId: PropTypes.number.isRequired,
+  }).isRequired,
 };

@@ -37,7 +37,7 @@ export default class Album extends Component {
 Album.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
     }).isRequired,
   }).isRequired,
 };
